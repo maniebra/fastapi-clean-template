@@ -1,0 +1,19 @@
+# IDE/LSP Related files
+.idea/
+.vscode/
+pyrightconfig.json
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Security
+**/*.env
+.secret
+.secretkey
+.rsa
+
+# Cache
+**/__pycache__/
+**/*.pyc
