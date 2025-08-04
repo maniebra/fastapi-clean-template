@@ -1,8 +1,8 @@
 import asyncio
 from fastapi import FastAPI
 
-from dmpbackend.controllers import auth_controller
-from dmpbackend.providers.db_provider import create_db
+from factbackend.controllers import auth_controller
+from factbackend.providers.db_provider import create_db
 
 app = FastAPI(prefix="/api/v1")
 

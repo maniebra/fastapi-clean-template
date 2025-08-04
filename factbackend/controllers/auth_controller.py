@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from dmpbackend.services import auth_service
+from factbackend.services import auth_service
 
 AuthController = APIRouter()
 

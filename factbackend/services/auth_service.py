@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Depends
-from dmpbackend.entities.user import User
-from dmpbackend.repositories.user_repository import UserRepository
+from factbackend.entities.user import User
+from factbackend.repositories.user_repository import UserRepository
 
 class AuthService:
     def __init__(self, repository: UserRepository = Depends()) -> None:
@@ -9,8 +9,6 @@ class AuthService:
 
     async def get_all_users(self):
         return await self.repository.get_all_users()
-
-    async def get_user_by_id(self, re)
 
     async def register_user(
         self,

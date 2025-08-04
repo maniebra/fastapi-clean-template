@@ -1,8 +1,8 @@
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from dmpbackend.entities.user import User
-from dmpbackend.providers.db_provider import get_main_db
+from factbackend.entities.user import User
+from factbackend.providers.db_provider import get_main_db
 from fastapi import Depends
 
 class UserRepository:

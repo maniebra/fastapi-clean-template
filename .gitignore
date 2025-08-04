@@ -14,6 +14,11 @@ env/
 .secretkey
 .rsa
 
+# SQLITE FILES 
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+
 # Cache
 **/__pycache__/
 **/*.pyc

@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from dmpbackend.generics.base_model import BaseModel
+from factbackend.generics.base_model import BaseModel
 
 # Create async engine
 DATABASE_URL = "sqlite+aiosqlite:///./your_db_file.db"
