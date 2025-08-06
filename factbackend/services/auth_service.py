@@ -1,4 +1,5 @@
 from typing import Annotated
+from uuid import UUID
 from fastapi import Depends
 from factbackend.entities.user import User
 from factbackend.repositories.user_repository import UserRepository
@@ -31,3 +32,9 @@ class AuthService:
                 last_name = last_name
                 )
         return await self.repository.create_new_user(user)
+
+    async def delete_user_by_id(self, user_id: UUID):
+        return await self.repository.delete_user_by_id(user_id)
+
+    async def get_user_by_id(self, user_id: UUID):
+        return await self.repository.get_user_by_id(user_id)
