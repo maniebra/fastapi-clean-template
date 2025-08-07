@@ -8,5 +8,4 @@ class RegisterUserRequestDto(BaseModel):
     email: str
     phone_number: str
     first_name: str
-    last_name: str | None = None
-
+    last_name: str

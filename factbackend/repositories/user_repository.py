@@ -10,9 +10,9 @@ class UserRepository:
         self.db_session: AsyncSession = main_db_session
 
     async def get_all_users(self):
-        stmt = select(User)
-        result = await self.db_session.scalar(stmt)
-        return result
+        stmt = select(User).distinct()
+        result = await self.db_session.execute(stmt) 
+        return result.scalars().all()
 
     async def get_user_by_id(self, user_id: UUID):
         stmt = select(User).where(User.id == user_id)
@@ -23,8 +23,11 @@ class UserRepository:
         try:
             self.db_session.add(user)
             await self.db_session.commit()
+            await self.db_session.refresh(user)
             return user
-        except Exception:
+        except Exception as e:
+            print(e)
+            await self.db_session.rollback()
             return None
 
     async def delete_user_by_id(self, user_id: UUID) -> UUID | None:
