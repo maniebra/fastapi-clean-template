@@ -1,0 +1,14 @@
+rule compile
+  command = python -m compileall factbackend
+
+rule lint
+  command = ruff check factbackend
+
+rule typecheck
+  command = mypy factbackend
+
+build bytecode: compile
+build linting: lint
+build typing: typecheck
+
+default bytecode linting typing
