@@ -27,6 +27,7 @@ class AuthService:
     ):
         if password != passwordConfirmation:
             raise Exception("Passwords do not match")
+        # TODO: Hash the password!
         user = User(
             username=username,
             password=password,
@@ -42,3 +43,53 @@ class AuthService:
 
     async def get_user_by_id(self, user_id: UUID):
         return await self.repository.get_user_by_id(user_id)
+
+    async def get_user_by_username(self, username: str):
+        return await self.repository.get_user_by_username(username)
+
+    async def get_user_by_email(self, email: str):
+        return await self.repository.get_user_by_email(email)
+
+    async def update_user(
+        self,
+        user_id: UUID,
+        username: str | None = None,
+        password: str | None = None,
+        passwordConfirmation: str | None = None,
+        email: str | None = None,
+        phone_number: str | None = None,
+        first_name: str | None = None,
+        last_name: str | None = None,
+    ):
+        user = await self.get_user_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+        if username is not None:
+            user.username = username
+        if password is not None:
+            if password != passwordConfirmation:
+                raise Exception("Passwords do not match")
+            user.password = password
+        if email is not None:
+            user.email = email
+        if phone_number is not None:
+            user.phone_number = phone_number
+        if first_name is not None:
+            user.first_name = first_name
+        if last_name is not None:
+            user.last_name = last_name
+        return await self.repository.update_user(user)
+
+    async def change_password(self, user_id: UUID, password: str):
+        user = await self.get_user_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+        user.password = password
+        return await self.update_user(user)
+
+    async def change_email(self, user_id: UUID, email: str):
+        user = await self.get_user_by_id(user_id)
+        if user is None:
+            raise Exception("User not found")
+        user.email = email
+        return await self.update_user(user)
