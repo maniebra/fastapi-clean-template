@@ -42,10 +42,9 @@ repos:
   # --- Security checks ---
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.6
-    ignore:
     hooks:
       - id: bandit
-        args: ["-x", "src/options/", "-c", "bandit.yaml"]
+        args: ["-x", "src/options/"]
 
   # --- Markdown linting ---
   - repo: https://github.com/igorshubovych/markdownlint-cli
