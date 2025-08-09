@@ -1,7 +1,7 @@
 from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.ext.asyncio import AsyncEngine
-from src.generics.base_model import BaseModel
+from src.commons.generics.base_model import BaseModel
 from src.options.db_options import (
     DATABASE_ECHO_ACTIVATED,
     DATABASE_URL,

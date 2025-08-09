@@ -6,7 +6,7 @@ import uuid
 
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
-from src.generics.base_model import BaseModel
+from src.commons.generics.base_model import BaseModel
 
 
 @final

@@ -2,19 +2,15 @@ from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
 from src.entities.user import User
-from src.generics.base_main_repository import BaseMainRepository
-from src.generics.base_main_service import BaseMainService
 from src.repositories.user_repository import UserRepository
 
 
 @final
-class AuthService(BaseMainService):
+class AuthService:
     def __init__(
-        self, repository: Annotated[UserRepository, Depends(UserRepository)]
+        self, user_repository: Annotated[UserRepository, Depends(UserRepository)]
     ) -> None:
-        super().__init__(repository)
-        self._repository: BaseMainRepository = repository
-        self.repository: UserRepository = self._repository
+        self.repository: UserRepository = user_repository
 
     async def get_all_users(self):
         return await self.repository.get_all_users()
