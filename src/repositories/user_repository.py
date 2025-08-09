@@ -10,6 +10,16 @@ class UserRepository(BaseMainRepository):
         result = await self.db_session.execute(stmt)
         return result.scalars().all()
 
+    async def get_user_by_username(self, username: str):
+        stmt = select(User).where(User.username == username)
+        result = await self.db_session.scalar(stmt)
+        return result
+
+    async def get_user_by_email(self, email: str):
+        stmt = select(User).where(User.email == email)
+        result = await self.db_session.scalar(stmt)
+        return result
+
     async def get_user_by_id(self, user_id: UUID):
         stmt = select(User).where(User.id == user_id)
         result = await self.db_session.scalar(stmt)
@@ -23,6 +33,16 @@ class UserRepository(BaseMainRepository):
             return user
         except Exception as e:
             print(e)
+            await self.db_session.rollback()
+            return None
+
+    async def update_user(self, user: User) -> User | None:
+        try:
+            self.db_session.add(user)
+            await self.db_session.commit()
+            await self.db_session.refresh(user)
+            return user
+        except Exception:
             await self.db_session.rollback()
             return None
 
