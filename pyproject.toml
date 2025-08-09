@@ -12,3 +12,6 @@ dependencies = [
     "sqlalchemy>=2.0.42",
     "uvicorn>=0.35.0",
 ]
+
+[tool.mypy]
+plugins = ["sqlalchemy.ext.mypy.plugin"]

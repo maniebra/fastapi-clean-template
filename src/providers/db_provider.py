@@ -1,7 +1,7 @@
 from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.ext.asyncio import AsyncEngine
-from src.commons.generics.base_model import BaseModel
+from src.commons.generics.base_entity import BaseEntity
 from src.options.db_options import (
     DATABASE_ECHO_ACTIVATED,
     DATABASE_URL,
@@ -37,7 +37,7 @@ async def get_main_db() -> AsyncGenerator[AsyncSession, None]:
 # Create tables
 async def create_db():
     async with main_db_engine.begin() as conn:
-        await conn.run_sync(BaseModel.metadata.create_all)
+        await conn.run_sync(BaseEntity.metadata.create_all)
 
 
 # Shutdown database

@@ -6,11 +6,11 @@ import uuid
 
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
-from src.commons.generics.base_model import BaseModel
+from src.commons.generics.base_entity import BaseEntity
 
 
 @final
-class User(BaseModel):
+class User(BaseEntity):
     __tablename__ = "user_account"
 
     # Authentication-related user data

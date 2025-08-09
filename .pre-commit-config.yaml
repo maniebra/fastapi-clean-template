@@ -14,27 +14,33 @@ repos:
 
   # --- Python formatting ---
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 25.1.0
     hooks:
       - id: black
 
   # --- Python linting ---
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.6.8
+    rev: v0.12.8
     hooks:
       - id: ruff
         args: ["--fix"]
 
   # --- Type checking ---
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.1
+    rev: v1.17.1
     hooks:
       - id: mypy
-        additional_dependencies: [types-requests, types-PyYAML]
+        additional_dependencies:
+          - types-requests
+          - types-PyYAML
+          - sqlalchemy>=2.0
+          - pydantic>=2.7
+        args:
+          - --enable-incomplete-feature=NewGenericSyntax
 
   # --- Security checks ---
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.9
+    rev: 1.8.6
     ignore:
     hooks:
       - id: bandit
@@ -42,14 +48,14 @@ repos:
 
   # --- Markdown linting ---
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.41.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
         args: ["--fix"]
 
   # --- Spell checking (English) ---
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.4.1
     hooks:
       - id: codespell
         args: ["--ignore-words-list", "teh,ths"]
