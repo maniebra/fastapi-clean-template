@@ -8,6 +8,7 @@ from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 from factbackend.generics.base_model import BaseModel
 
+
 @final
 class User(BaseModel):
     __tablename__ = "user_account"
@@ -23,7 +24,9 @@ class User(BaseModel):
     first_name: Mapped[str] = mapped_column(String(50))
     last_name: Mapped[str] = mapped_column(String(50))
     # Auto-generated metadata
-    created_at: Mapped[date] = mapped_column(DateTime, default = datetime.datetime.now())
-    updated_at: Mapped[date] = mapped_column(DateTime, nullable=True, default = None)
-    last_login: Mapped[date] = mapped_column(DateTime, nullable=True, default = None)
-    last_changed_password: Mapped[date] = mapped_column(DateTime, nullable=True, default=None)
+    created_at: Mapped[date] = mapped_column(DateTime, default=datetime.datetime.now())
+    updated_at: Mapped[date] = mapped_column(DateTime, nullable=True, default=None)
+    last_login: Mapped[date] = mapped_column(DateTime, nullable=True, default=None)
+    last_changed_password: Mapped[date] = mapped_column(
+        DateTime, nullable=True, default=None
+    )

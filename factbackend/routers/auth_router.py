@@ -9,11 +9,14 @@ AuthRouter = APIRouter()
 
 
 @AuthRouter.get("/")
-async def all(service : Annotated[AuthService, Depends(AuthService)]):
+async def all(service: Annotated[AuthService, Depends(AuthService)]):
     return await service.get_all_users()
 
+
 @AuthRouter.post("/")
-async def register_user(request: RegisterUserRequestDto, service : Annotated[AuthService, Depends()]):
+async def register_user(
+    request: RegisterUserRequestDto, service: Annotated[AuthService, Depends()]
+):
     return await service.register_user(
         request.username,
         request.password,
@@ -26,5 +29,5 @@ async def register_user(request: RegisterUserRequestDto, service : Annotated[Aut
 
 
 @AuthRouter.delete("/{user_id}")
-async def delete_user_by_id(user_id: UUID, service : Annotated[AuthService, Depends()]):
+async def delete_user_by_id(user_id: UUID, service: Annotated[AuthService, Depends()]):
     return await service.delete_user_by_id(user_id)

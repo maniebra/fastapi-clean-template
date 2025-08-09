@@ -14,7 +14,7 @@ env/
 .secretkey
 .rsa
 
-# SQLITE FILES 
+# SQLITE FILES
 **/*.sqlite
 **/*.sqlite3
 **/*.db

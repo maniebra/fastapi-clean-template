@@ -3,10 +3,11 @@ from sqlalchemy import select
 from factbackend.entities.user import User
 from factbackend.generics.base_main_repository import BaseMainRepository
 
+
 class UserRepository(BaseMainRepository):
     async def get_all_users(self):
         stmt = select(User).distinct()
-        result = await self.db_session.execute(stmt) 
+        result = await self.db_session.execute(stmt)
         return result.scalars().all()
 
     async def get_user_by_id(self, user_id: UUID):
