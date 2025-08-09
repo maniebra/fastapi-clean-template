@@ -38,3 +38,8 @@ async def get_main_db() -> AsyncGenerator[AsyncSession, None]:
 async def create_db():
     async with main_db_engine.begin() as conn:
         await conn.run_sync(BaseModel.metadata.create_all)
+
+
+# Shutdown database
+async def shutdown_db():
+    await main_db_engine.dispose()

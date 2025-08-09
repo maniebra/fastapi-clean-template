@@ -30,7 +30,7 @@ class AuthService(BaseMainService):
         last_name: str,
     ):
         if password != passwordConfirmation:
-            raise Exception("WHAT THE FUCK!")
+            raise Exception("Passwords do not match")
         user = User(
             username=username,
             password=password,

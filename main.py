@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 from factbackend.options.app_options import ENTRYPOINT, HOST, PORT, RELOAD
 from factbackend.routers import auth_router
-from factbackend.providers.db_provider import create_db
+from factbackend.providers.db_provider import create_db, shutdown_db
 
 app = FastAPI(prefix="/api/v1")
 
@@ -14,7 +14,7 @@ async def lifespan():
     await create_db()
     yield
     # Shutdown
-    # TODO: A CLOSE CONNECTION SHOULD GO HERE!
+    await shutdown_db()
 
 
 app.include_router(auth_router.AuthRouter, prefix="/users")
