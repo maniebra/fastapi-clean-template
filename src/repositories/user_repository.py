@@ -42,7 +42,8 @@ class UserRepository(BaseMainRepository):
             await self.db_session.commit()
             await self.db_session.refresh(user)
             return user
-        except Exception:
+        except Exception as e:
+            print(e)
             await self.db_session.rollback()
             return None
 
@@ -52,5 +53,6 @@ class UserRepository(BaseMainRepository):
             await self.db_session.delete(user)
             await self.db_session.commit()
             return user_id
-        except Exception:
+        except Exception as e:
+            print(e)
             return None

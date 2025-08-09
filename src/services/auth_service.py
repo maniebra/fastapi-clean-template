@@ -20,13 +20,13 @@ class AuthService:
         self,
         username: str,
         password: str,
-        passwordConfirmation: str,
+        password_confirmation: str,
         email: str,
         phone_number: str,
         first_name: str,
         last_name: str,
     ):
-        if password != passwordConfirmation:
+        if password != password_confirmation:
             raise Exception("Passwords do not match")
         # TODO: Hash the password!
         user = User(
@@ -56,7 +56,7 @@ class AuthService:
         user_id: UUID,
         username: str | None = None,
         password: str | None = None,
-        passwordConfirmation: str | None = None,
+        password_confirmation: str | None = None,
         email: str | None = None,
         phone_number: str | None = None,
         first_name: str | None = None,
@@ -68,7 +68,7 @@ class AuthService:
         if username is not None:
             user.username = username
         if password is not None:
-            if password != passwordConfirmation:
+            if password != password_confirmation:
                 raise Exception("Passwords do not match")
             user.password = password
         if email is not None:

@@ -1,5 +1,7 @@
-fastapi
-uvicorn
-pydantic
+fastapi~=0.116.1
+uvicorn~=0.35.0
+pydantic~=2.11.7
 psycopg2
-sqlalchemy
+sqlalchemy~=2.0.42
+
+PyJWT~=2.10.1

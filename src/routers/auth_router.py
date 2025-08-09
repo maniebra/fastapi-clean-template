@@ -11,7 +11,7 @@ AuthRouter = APIRouter()
 
 
 @AuthRouter.get("/")
-async def all(service: Annotated[AuthService, Depends(AuthService)]):
+async def all_users(service: Annotated[AuthService, Depends(AuthService)]):
     return await service.get_all_users()
 
 
@@ -57,7 +57,7 @@ async def update_user(
         user_id,
         username=request.username,
         password=request.password,
-        passwordConfirmation=request.passwordConfirmation,
+        password_confirmation=request.passwordConfirmation,
         email=request.email,
         phone_number=request.phone_number,
         first_name=request.first_name,
