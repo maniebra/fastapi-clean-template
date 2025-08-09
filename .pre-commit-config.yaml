@@ -60,4 +60,4 @@ repos:
       - id: codespell
         args: ["--ignore-words-list", "teh,ths"]
 
-default_stages: [commit, push]
+default_stages: [pre-commit, pre-push]
