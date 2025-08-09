@@ -2,8 +2,8 @@ from typing import Annotated
 from uuid import UUID
 from fastapi import Depends
 from fastapi.routing import APIRouter
-from factbackend.dtos.requests.auth.register_user_request import RegisterUserRequestDto
-from factbackend.services.auth_service import AuthService
+from src.dtos.requests.auth.register_user_request import RegisterUserRequestDto
+from src.services.auth_service import AuthService
 
 AuthRouter = APIRouter()
 

@@ -1,8 +1,8 @@
 from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.ext.asyncio import AsyncEngine
-from factbackend.generics.base_model import BaseModel
-from factbackend.options.db_options import (
+from src.generics.base_model import BaseModel
+from src.options.db_options import (
     DATABASE_ECHO_ACTIVATED,
     DATABASE_URL,
     SHOULD_EXPIRE_ON_COMMIT,

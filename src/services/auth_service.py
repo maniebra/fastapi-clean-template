@@ -1,10 +1,10 @@
 from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
-from factbackend.entities.user import User
-from factbackend.generics.base_main_repository import BaseMainRepository
-from factbackend.generics.base_main_service import BaseMainService
-from factbackend.repositories.user_repository import UserRepository
+from src.entities.user import User
+from src.generics.base_main_repository import BaseMainRepository
+from src.generics.base_main_service import BaseMainService
+from src.repositories.user_repository import UserRepository
 
 
 @final

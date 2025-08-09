@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import Depends
-from factbackend.generics.base_main_repository import BaseMainRepository
+from src.generics.base_main_repository import BaseMainRepository
 
 
 class BaseMainService:

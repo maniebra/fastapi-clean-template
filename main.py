@@ -1,9 +1,9 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from factbackend.options.app_options import ENTRYPOINT, HOST, PORT, RELOAD
-from factbackend.routers import auth_router
-from factbackend.providers.db_provider import create_db, shutdown_db
+from src.options.app_options import ENTRYPOINT, HOST, PORT, RELOAD
+from src.routers import auth_router
+from src.providers.db_provider import create_db, shutdown_db
 
 app = FastAPI(prefix="/api/v1")
 

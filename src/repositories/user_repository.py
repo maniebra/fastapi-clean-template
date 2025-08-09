@@ -1,7 +1,7 @@
 from uuid import UUID
 from sqlalchemy import select
-from factbackend.entities.user import User
-from factbackend.generics.base_main_repository import BaseMainRepository
+from src.entities.user import User
+from src.generics.base_main_repository import BaseMainRepository
 
 
 class UserRepository(BaseMainRepository):

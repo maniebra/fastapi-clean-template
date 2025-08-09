@@ -38,7 +38,7 @@ repos:
     ignore:
     hooks:
       - id: bandit
-        args: ["-x", "factbackend/options/", "-c", "bandit.yaml"]
+        args: ["-x", "src/options/", "-c", "bandit.yaml"]
 
   # --- Markdown linting ---
   - repo: https://github.com/igorshubovych/markdownlint-cli

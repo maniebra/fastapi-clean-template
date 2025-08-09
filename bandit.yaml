@@ -1,2 +1,2 @@
 exclude:
-  - factbackend/options/
+  - src/options/
