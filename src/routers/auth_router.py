@@ -2,6 +2,7 @@ from typing import Annotated
 from uuid import UUID
 from fastapi import Depends
 from fastapi.routing import APIRouter
+from src.dtos.requests.auth.authenticate_request_dto import AuthenticateRequestDto
 from src.dtos.requests.auth.register_user_request import RegisterUserRequestDto
 from src.dtos.requests.auth.update_user_request_dto import UpdateUserRequestDto
 from src.services.auth_service import AuthService
@@ -81,3 +82,10 @@ async def change_email(
 @AuthRouter.delete("/{user_id}")
 async def delete_user_by_id(user_id: UUID, service: Annotated[AuthService, Depends()]):
     return await service.delete_user_by_id(user_id)
+
+
+@AuthRouter.post("/login")
+async def login(
+    request: AuthenticateRequestDto, service: Annotated[AuthService, Depends()]
+):
+    return await service.authenticate_user(request.username, request.password)

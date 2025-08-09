@@ -2,6 +2,7 @@ from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
 from src.entities.user import User
+from src.providers.jwt_provider import create_access_token
 from src.repositories.user_repository import UserRepository
 
 
@@ -81,15 +82,17 @@ class AuthService:
         return await self.repository.update_user(user)
 
     async def change_password(self, user_id: UUID, password: str):
-        user = await self.get_user_by_id(user_id)
-        if user is None:
-            raise Exception("User not found")
-        user.password = password
-        return await self.update_user(user)
+        return await self.update_user(user_id, password=password)
 
     async def change_email(self, user_id: UUID, email: str):
-        user = await self.get_user_by_id(user_id)
+        return await self.update_user(user_id, email=email)
+
+    async def authenticate_user(self, username: str, password: str):
+        user = await self.get_user_by_username(username)
         if user is None:
             raise Exception("User not found")
-        user.email = email
-        return await self.update_user(user)
+        if user.password != password:
+            raise Exception("Invalid password")
+        jwt_map = {"id": str(user.id), "username": user.username}
+        token: str = create_access_token(jwt_map)
+        return token
