@@ -1,12 +1,17 @@
-from typing import Annotated
+from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
 from factbackend.entities.user import User
+from factbackend.generics.base_main_repository import BaseMainRepository
+from factbackend.generics.base_main_service import BaseMainService
 from factbackend.repositories.user_repository import UserRepository
 
-class AuthService:
-    def __init__(self, repository: UserRepository = Depends()) -> None:
-        self.repository : UserRepository = repository
+@final
+class AuthService(BaseMainService):
+    def __init__(self, repository: Annotated[UserRepository, Depends(UserRepository)]) -> None:
+        super().__init__(repository)
+        self._repository : BaseMainRepository = repository
+        self.repository : UserRepository = self._repository
 
     async def get_all_users(self):
         return await self.repository.get_all_users()

@@ -1,14 +1,9 @@
 from uuid import UUID
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from factbackend.entities.user import User
-from factbackend.providers.db_provider import get_main_db
-from fastapi import Depends
+from factbackend.generics.base_main_repository import BaseMainRepository
 
-class UserRepository:
-    def __init__(self, main_db_session: AsyncSession = Depends(get_main_db)) -> None:
-        self.db_session: AsyncSession = main_db_session
-
+class UserRepository(BaseMainRepository):
     async def get_all_users(self):
         stmt = select(User).distinct()
         result = await self.db_session.execute(stmt) 
