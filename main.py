@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.options.app_options import (
+from src.commons.options.app_options import (
     ALLOW_CREDENTIALS,
     ALLOWED_HEADERS,
     ALLOWED_HOSTS,

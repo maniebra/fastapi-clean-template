@@ -2,7 +2,7 @@ from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.ext.asyncio import AsyncEngine
 from src.commons.generics.base_entity import BaseEntity
-from src.options.db_options import (
+from src.commons.options.db_options import (
     DATABASE_ECHO_ACTIVATED,
     DATABASE_URL,
     SHOULD_EXPIRE_ON_COMMIT,

@@ -7,7 +7,11 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from jwt import ExpiredSignatureError, PyJWTError
 
-from src.options.jwt_options import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from src.commons.options.jwt_options import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    ALGORITHM,
+    SECRET_KEY,
+)
 
 JSONScalar: TypeAlias = str | int | float | bool
 Claims: TypeAlias = dict[str, object]
