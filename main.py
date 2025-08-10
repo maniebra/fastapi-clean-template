@@ -13,7 +13,7 @@ from src.options.app_options import (
     RELOAD,
 )
 from src.routers import auth_router
-from src.providers.db_provider import create_db, shutdown_db
+from src.commons.providers.db_provider import create_db, shutdown_db
 
 app = FastAPI(prefix="/api/v1")
 

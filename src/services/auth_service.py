@@ -2,7 +2,7 @@ from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
 from src.entities.user import User
-from src.providers.jwt_provider import create_access_token
+from src.commons.providers.jwt_provider import create_access_token
 from src.repositories.user_repository import UserRepository
 
 

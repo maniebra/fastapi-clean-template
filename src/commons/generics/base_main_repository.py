@@ -1,7 +1,7 @@
 from typing import Annotated
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from fastapi import Depends
-from src.providers.db_provider import get_main_db
+from src.commons.providers.db_provider import get_main_db
 
 
 class BaseMainRepository:
