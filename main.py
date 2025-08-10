@@ -14,6 +14,7 @@ from src.commons.options.app_options import (
     RELOAD,
 )
 from src.commons.providers.openapi_provider import build_openapi
+from src.middlewares.bearer_auth_middleware import BearerAuthMiddleware
 from src.routers import auth_router
 from src.commons.providers.db_provider import create_db, shutdown_db
 
@@ -27,6 +28,12 @@ app.add_middleware(
     allow_credentials=ALLOW_CREDENTIALS,
     allow_methods=ALLOWED_METHODS,
     allow_headers=ALLOWED_HEADERS,
+)
+
+app.add_middleware(
+    BearerAuthMiddleware,
+    attach_only=True,
+    public_paths={"/", "/health", "/docs", "/redoc", "/openapi.json"},
 )
 
 app.openapi = lambda: build_openapi(app)
