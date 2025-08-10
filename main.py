@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer
 
 from src.commons.options.app_options import (
     ALLOW_CREDENTIALS,
@@ -12,10 +13,13 @@ from src.commons.options.app_options import (
     PORT,
     RELOAD,
 )
+from src.commons.providers.openapi_provider import build_openapi
 from src.routers import auth_router
 from src.commons.providers.db_provider import create_db, shutdown_db
 
 app = FastAPI(prefix="/api/v1")
+
+bearer = HTTPBearer(auto_error=False)
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,6 +28,8 @@ app.add_middleware(
     allow_methods=ALLOWED_METHODS,
     allow_headers=ALLOWED_HEADERS,
 )
+
+app.openapi = lambda: build_openapi(app)
 
 
 @asynccontextmanager
