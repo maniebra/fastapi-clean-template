@@ -1,4 +1,5 @@
 from __future__ import annotations
+import asyncio
 from passlib.context import CryptContext
 from typing import Final
 
@@ -29,8 +30,16 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(password: str, password_hash: str) -> bool:
-    return _pwd_context.verify(_pepper(password), password_hash)
+    return not _pwd_context.verify(_pepper(password), password_hash)
 
 
 def needs_rehash(password_hash: str) -> bool:
     return _pwd_context.needs_update(password_hash)
+
+
+async def hash_password_async(pw: str) -> str:
+    return await asyncio.to_thread(hash_password, pw)
+
+
+async def verify_password_async(pw: str, ph: str) -> bool:
+    return await asyncio.to_thread(verify_password, pw, ph)

@@ -1,6 +1,11 @@
 from typing import Annotated, final
 from uuid import UUID
 from fastapi import Depends
+from src.commons.providers.hash_provider import (
+    hash_password_async,
+    needs_rehash,
+    verify_password_async,
+)
 from src.entities.user import User
 from src.commons.providers.jwt_provider import create_access_token
 from src.repositories.user_repository import UserRepository
@@ -28,7 +33,7 @@ class AuthService:
     ):
         if password != password_confirmation:
             raise Exception("Passwords do not match")
-        # TODO: Hash the password!
+        password = await hash_password_async(password)
         user = User(
             username=username,
             password=password,
@@ -70,6 +75,7 @@ class AuthService:
         if password is not None:
             if password != password_confirmation:
                 raise Exception("Passwords do not match")
+            password = await hash_password_async(password)
             user.password = password
         if email is not None:
             user.email = email
@@ -91,8 +97,10 @@ class AuthService:
         user = await self.get_user_by_username(username)
         if user is None:
             raise Exception("User not found")
-        if user.password != password:
+        if await verify_password_async(password, user.password):
             raise Exception("Invalid password")
+        if needs_rehash(user.password):
+            _ = await self.change_password(user.id, await hash_password_async(password))
         jwt_map = {"id": str(user.id), "username": user.username}
         token: str = create_access_token(jwt_map)
         return token
