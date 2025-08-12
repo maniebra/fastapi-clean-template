@@ -1,3 +1,4 @@
+import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -52,4 +53,5 @@ app.include_router(auth_router.AuthRouter, prefix="/users")
 if __name__ == "__main__":
     import uvicorn
 
+    asyncio.run(create_db())
     uvicorn.run(ENTRYPOINT, host=HOST, port=PORT, reload=RELOAD)
