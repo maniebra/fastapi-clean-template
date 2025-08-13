@@ -30,7 +30,7 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(password: str, password_hash: str) -> bool:
-    return not _pwd_context.verify(_pepper(password), password_hash)
+    return _pwd_context.verify(_pepper(password), password_hash)
 
 
 def needs_rehash(password_hash: str) -> bool:

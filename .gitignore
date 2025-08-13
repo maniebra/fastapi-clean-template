@@ -25,3 +25,4 @@ env/
 .mypy_cache/
 .ruff_cache/
 .ropeproject/
+.pytest_cache/
