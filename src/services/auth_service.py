@@ -6,7 +6,7 @@ from src.commons.providers.hash_provider import (
     needs_rehash,
     verify_password_async,
 )
-from src.entities.user import User
+from src.entities.user import Role, User
 from src.commons.providers.jwt_provider import create_access_token
 from src.repositories.user_repository import UserRepository
 
@@ -104,3 +104,25 @@ class AuthService:
         jwt_map = {"id": str(user.id), "username": user.username}
         token: str = create_access_token(jwt_map)
         return token
+
+    async def get_roles(self):
+        return await self.repository.get_roles()
+
+    async def get_role_by_id(self, role_id: int):
+        return await self.repository.get_role_by_id(role_id)
+
+    async def create_new_role(self, name: str) -> Role | None:
+        role = Role(name=name)
+        return await self.repository.create_new_role(role)
+
+    async def update_role(self, role: Role):
+        return await self.repository.update_role(role)
+
+    async def delete_role(self, role_id: int):
+        return await self.repository.delete_role(role_id)
+
+    async def add_role_to_user(self, user_id: UUID, role_id: int):
+        return await self.repository.add_role_to_user(user_id, role_id)
+
+    async def take_role_away_from_user(self, user_id: UUID, role_id: int):
+        return await self.repository.take_role_away_from_user(user_id, role_id)

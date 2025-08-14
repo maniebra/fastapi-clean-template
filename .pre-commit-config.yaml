@@ -58,6 +58,6 @@ repos:
     rev: v2.4.1
     hooks:
       - id: codespell
-        args: ["--ignore-words-list", "teh,ths"]
+        args: ["--ignore-words-list", "teh,ths,selectin"]
 
 default_stages: [pre-commit, pre-push]

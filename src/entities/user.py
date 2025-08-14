@@ -34,7 +34,7 @@ class UserRole(BaseEntity):
     )
 
     user: Mapped["User"] = relationship(back_populates="user_roles")
-    role: Mapped["Role"] = relationship(back_populates="role_users")
+    role: Mapped["Role"] = relationship(back_populates="role_users", lazy="joined")
 
 
 @final
@@ -48,7 +48,7 @@ class User(BaseEntity):
     email: Mapped[str] = mapped_column(String(90), unique=True)
     phone_number: Mapped[str] = mapped_column(String(14), unique=True)
     user_roles: Mapped[list["UserRole"]] = relationship(
-        back_populates="user", cascade="all, delete-orphan"
+        back_populates="user", cascade="all, delete-orphan", lazy="selectin"
     )
 
     roles: AssociationProxy[list["Role"]] = association_proxy("user_roles", "role")
