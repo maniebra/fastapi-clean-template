@@ -5,6 +5,7 @@ from src.commons.providers.hash_provider import (
 import pytest
 
 
+@pytest.mark.unittest
 @pytest.mark.asyncio
 async def test_password_verification_valid_and_invalid():
     hashed = await hash_password_async("Mojave")
@@ -13,6 +14,7 @@ async def test_password_verification_valid_and_invalid():
     assert await verify_password_async("Skewrite", hashed) is False
 
 
+@pytest.mark.unittest
 @pytest.mark.asyncio
 async def test_password_verification_malformed_hash_is_false():
     try:
