@@ -4,14 +4,23 @@ from uuid import UUID
 from datetime import date
 import uuid
 
-from sqlalchemy import DateTime, ForeignKey, String, Integer
+from sqlalchemy import (
+    Constraint,
+    DateTime,
+    ForeignKey,
+    String,
+    Integer,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.ext.associationproxy import AssociationProxy, association_proxy
 from src.commons.generics.base_entity import BaseEntity
 
 
 @final
 class UserRole(BaseEntity):
-    __tablename__ = "user_roles"
+    __tablename__: str = "user_roles"
+    __table_args__: tuple[Constraint] = (UniqueConstraint("user_id", "role_id"),)
 
     user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("user_account.id", ondelete="CASCADE"), primary_key=True
@@ -20,19 +29,17 @@ class UserRole(BaseEntity):
         Integer, ForeignKey("roles.id", ondelete="CASCADE"), primary_key=True
     )
 
-    # Optional extra fields (timestamps, etc.)
     assigned_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=datetime.datetime.utcnow
+        DateTime, default=datetime.datetime.now()
     )
 
-    # Relationships back to parents
     user: Mapped["User"] = relationship(back_populates="user_roles")
     role: Mapped["Role"] = relationship(back_populates="role_users")
 
 
 @final
 class User(BaseEntity):
-    __tablename__ = "user_account"
+    __tablename__: str = "user_account"
 
     # Authentication-related user data
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid.uuid4())
@@ -44,7 +51,7 @@ class User(BaseEntity):
         back_populates="user", cascade="all, delete-orphan"
     )
 
-    roles: Mapped[list["Role"]] = relationship(secondary="user_roles", viewonly=True)
+    roles: AssociationProxy[list["Role"]] = association_proxy("user_roles", "role")
 
     # Personal Information
     first_name: Mapped[str] = mapped_column(String(50))
@@ -61,7 +68,7 @@ class User(BaseEntity):
 
 @final
 class Role(BaseEntity):
-    __tablename__ = "roles"
+    __tablename__: str = "roles"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String, unique=True)
