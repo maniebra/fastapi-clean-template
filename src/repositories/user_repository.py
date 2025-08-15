@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
@@ -54,6 +55,19 @@ class UserRepository(BaseMainRepository):
             await self.db_session.delete(user)
             await self.db_session.commit()
             return user_id
+        except Exception as e:
+            print(e)
+            return None
+
+    async def renew_valid_iat_after(self, user_id: UUID) -> datetime | None:
+        try:
+            user = await self.get_user_by_id(user_id)
+            if user is None:
+                raise Exception("No such user!")
+            new_valid_iat_after = datetime.now()
+            user.valid_iat_after = new_valid_iat_after
+            _ = await self.update_user(user)
+            return new_valid_iat_after
         except Exception as e:
             print(e)
             return None

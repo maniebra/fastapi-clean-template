@@ -2,6 +2,7 @@ from typing import Annotated
 from uuid import UUID
 from fastapi import Depends
 from fastapi.routing import APIRouter
+from src.commons.decorators.auth_decorators import has_roles, is_logged_in
 from src.dtos.requests.auth.authenticate_request_dto import AuthenticateRequestDto
 from src.dtos.requests.auth.create_role_dto import CreateRoleDto
 from src.dtos.requests.auth.register_user_request import RegisterUserRequestDto
@@ -15,6 +16,8 @@ AuthRouter = APIRouter(tags=["Auth"])
 
 
 @AuthRouter.get("/")
+@has_roles("admin")
+@is_logged_in
 async def all_users(service: Annotated[AuthService, Depends(AuthService)]):
     users = await service.get_all_users()
     return [UserSelectDto.from_entity(user) for user in users]

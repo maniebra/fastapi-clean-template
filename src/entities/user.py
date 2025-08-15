@@ -64,6 +64,9 @@ class User(BaseEntity):
     last_changed_password: Mapped[date] = mapped_column(
         DateTime, nullable=True, default=None
     )
+    valid_iat_after: Mapped[date] = mapped_column(
+        DateTime, default=datetime.datetime.now()
+    )
 
 
 @final

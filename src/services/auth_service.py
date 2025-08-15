@@ -1,13 +1,13 @@
 from typing import Annotated, final
 from uuid import UUID
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from src.commons.providers.hash_provider import (
     hash_password_async,
     needs_rehash,
     verify_password_async,
 )
 from src.entities.user import Role, User
-from src.commons.providers.jwt_provider import create_access_token
+from src.commons.providers.jwt_provider import Claims, create_access_token
 from src.repositories.user_repository import UserRepository
 
 
@@ -85,7 +85,9 @@ class AuthService:
             user.first_name = first_name
         if last_name is not None:
             user.last_name = last_name
-        return await self.repository.update_user(user)
+        new_user = await self.repository.update_user(user)
+        _ = await self.repository.renew_valid_iat_after(user.id)
+        return new_user
 
     async def change_password(self, user_id: UUID, password: str):
         return await self.update_user(user_id, password=password)
@@ -93,15 +95,28 @@ class AuthService:
     async def change_email(self, user_id: UUID, email: str):
         return await self.update_user(user_id, email=email)
 
-    async def authenticate_user(self, username: str, password: str):
+    async def authenticate_user(self, username: str, password: str) -> str:
         user = await self.get_user_by_username(username)
+        invalid_exc = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+        )
+
         if user is None:
-            raise Exception("User not found")
-        if await verify_password_async(password, user.password):
-            raise Exception("Invalid password")
+            raise invalid_exc
+
+        is_valid = await verify_password_async(password, user.password)
+        if not is_valid:
+            raise invalid_exc
+
         if needs_rehash(user.password):
-            _ = await self.change_password(user.id, await hash_password_async(password))
-        jwt_map = {"id": str(user.id), "username": user.username}
+            new_hash = await hash_password_async(password)
+            _ = await self.change_password(user.id, new_hash)
+
+        jwt_map: Claims = {
+            "id": str(user.id),
+            "username": user.username,
+            "roles": [role.name for role in user.roles],
+        }
         token: str = create_access_token(jwt_map)
         return token
 
@@ -122,7 +137,11 @@ class AuthService:
         return await self.repository.delete_role(role_id)
 
     async def add_role_to_user(self, user_id: UUID, role_id: int):
-        return await self.repository.add_role_to_user(user_id, role_id)
+        user_role = await self.repository.add_role_to_user(user_id, role_id)
+        _ = await self.repository.renew_valid_iat_after(user_id)
+        return user_role
 
     async def take_role_away_from_user(self, user_id: UUID, role_id: int):
-        return await self.repository.take_role_away_from_user(user_id, role_id)
+        user = await self.repository.take_role_away_from_user(user_id, role_id)
+        _ = await self.repository.renew_valid_iat_after(user_id)
+        return user

@@ -169,6 +169,18 @@ wheels = [
 ]
 
 [[package]]
+name = "fastapi-decorators"
+version = "1.0.17"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastapi" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/07/ff/fd55d20543a193d557fd72f02cd71340f24518cc149d00997607aae253af/fastapi_decorators-1.0.17.tar.gz", hash = "sha256:f3a0f48980f786ebea65d79e7b286661e7001edcc1e4b809ac56d081977ec1f4", size = 8573, upload-time = "2025-07-04T12:51:30.627Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/10/73/0979d0d7bb2aafb15744a99c28a76c3874d9417c3dcd3c21286a874bacca/fastapi_decorators-1.0.17-py3-none-any.whl", hash = "sha256:ceb78b3fd4b3a0c25a8509851f41ca6cd4f01c773ad51da0a09e4c8540bee7d3", size = 8568, upload-time = "2025-07-04T12:51:29.571Z" },
+]
+
+[[package]]
 name = "fastapicleantemplate"
 version = "0.1.0"
 source = { virtual = "." }
@@ -176,6 +188,7 @@ dependencies = [
     { name = "aiosqlite" },
     { name = "argon2-cffi" },
     { name = "fastapi" },
+    { name = "fastapi-decorators" },
     { name = "passlib", extra = ["argon2"] },
     { name = "psycopg2" },
     { name = "pydantic" },
@@ -191,6 +204,7 @@ requires-dist = [
     { name = "aiosqlite", specifier = ">=0.21.0" },
     { name = "argon2-cffi", specifier = ">=25.1.0" },
     { name = "fastapi", specifier = ">=0.116.1" },
+    { name = "fastapi-decorators", specifier = ">=1.0.17" },
     { name = "passlib", extras = ["argon2"], specifier = ">=1.7.4" },
     { name = "psycopg2", specifier = ">=2.9.10" },
     { name = "pydantic", specifier = ">=2.11.7" },
